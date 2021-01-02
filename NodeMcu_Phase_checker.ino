@@ -82,7 +82,8 @@ void updateTS(int status){
   ThingSpeak.setField(1, status);
 
   // write to the ThingSpeak channel
-  int resp = ThingSpeak.writeFields(SECRET_CH_ID, myWriteAPIKey);
+  //int resp = ThingSpeak.writeFields(SECRET_CH_ID, myWriteAPIKey);
+  int resp = ThingSpeak.writeField(SECRET_CH_ID, 1, status, myWriteAPIKey);
   if(resp == 200){
     lastUpdateTime = millis();
     Serial.println("Channel update successful. "+ String(millis()));
@@ -216,6 +217,7 @@ void setup() {
   // ThingSpeak
   ThingSpeak.begin(client);  // Initialize ThingSpeak
   Serial.println("TS initialized.");
+  digitalWrite(BUILT_IN_LED, HIGH);
 
 }
 
@@ -231,7 +233,7 @@ void loop() {
     
   if(val > 512){
     if(lastValue != 1){
-      digitalWrite(BUILT_IN_LED, HIGH);
+      digitalWrite(BUILT_IN_LED, LOW);
       lastValue = 1;
       currentState = 1;
       Serial.println("time: " + String(t) + " i: " + String(i) + "\tVal: " + String(val));
@@ -247,7 +249,7 @@ void loop() {
     i++;
   }else{
     if(lastValue != 0){
-      digitalWrite(BUILT_IN_LED, LOW);
+      digitalWrite(BUILT_IN_LED, HIGH);
       lastValue = 0;
       currentState = 0;
       Serial.println("time: " + String(t) + " i: " + String(i) + "\tVal: " + String(val));
