@@ -18,7 +18,7 @@
 #include <ThingSpeak.h>
 #include "secrets.h"
 
-#define VERSION "v0.1"
+#define VERSION "v1.0 RC"
 
 #define SOFTWARE_NAME "Phase checker"
 
