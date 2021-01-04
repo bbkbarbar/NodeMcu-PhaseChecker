@@ -18,7 +18,7 @@
 #include <ThingSpeak.h>
 #include "secrets.h"
 
-#define VERSION "v1.0 RC"
+#define VERSION "v1.1 RC"
 
 #define SOFTWARE_NAME "Phase checker"
 
@@ -144,6 +144,11 @@ void HandleRoot(){
   server.send(200, "text/html", message );
 }
 
+void HandleData(){
+  String message = "" + String(currentState);
+  server.send(200, "text/html", message );
+}
+
 
 void HandleNotFound(){
   String message = "File Not Found\n\n";
@@ -210,6 +215,7 @@ void setup() {
   digitalWrite(A0, LOW);
 
   server.on("/", HandleRoot);
+  server.on("/data", HandleData);
   server.onNotFound( HandleNotFound );
   server.begin();
   Serial.println("HTTP server started at ip " + WiFi.localIP().toString() );
